@@ -17,30 +17,37 @@ namespace DN
         {
             [SerializeField] Dictionary<string, string> columns;
 
-            public Row(Dictionary<string, string> columns) => this.columns = columns;
+            public Row(Dictionary<string, string> columns)
+            {
+                this.columns = new Dictionary<string, string>();
+                foreach (var pair in columns)
+                    this.columns[pair.Key.Trim().ToLower()] = pair.Value;
+            }
 
             delegate bool Parser<T>(string s, out T result);
-            T? Get<T>(string column, Parser<T> parser)
+            readonly T GetAndParse<T>(string column, Parser<T> parser, T defaultValue)
             {
-                if (!parser(columns[column], out T result))
-                    return default(T);
+                if (!columns.TryGetValue(column.Trim().ToLower(), out var str))
+                    return defaultValue;
+                if (!parser(str, out var result))
+                    return defaultValue;
                 return result;
             }
 
-            public bool? Bool(string column) => Get<bool>(column, bool.TryParse);
-            public int? Int(string column) => Get<int>(column, int.TryParse);
-            public float? Float(string column) => Get<float>(column, float.TryParse);
-            public string String(string column)
+            public readonly bool Bool(string column, bool defaultValue = false) => GetAndParse<bool>(column, bool.TryParse, defaultValue);
+            public readonly int Int(string column, int defaultValue = 0) => GetAndParse<int>(column, int.TryParse, defaultValue);
+            public readonly float Float(string column, float defaultValue = 0.0f) => GetAndParse<float>(column, float.TryParse, defaultValue);
+            public readonly string String(string column, string defaultValue = "")
             {
-                if (!columns.TryGetValue(column, out string result))
-                    return string.Empty;
+                if (!columns.TryGetValue(column.Trim().ToLower(), out var result))
+                    return defaultValue;
                 result = result.Trim();
                 return result;
             }
-            public string[] Array(string column)
+            public readonly string[] Array(string column, string[] defaultValue = null!)
             {
-                if (!columns.TryGetValue(column, out string str))
-                    return new string[0];
+                if (!columns.TryGetValue(column.Trim().ToLower(), out var str))
+                    return defaultValue ?? System.Array.Empty<string>();
                 string[] result = str.Split(',');
                 for (int i = 0; i < result.Length; ++i)
                     result[i] = result[i].Trim();
@@ -51,12 +58,14 @@ namespace DN
         [SerializeField] Dictionary<string, int> idToRow;
         [SerializeField] Row[] rows;
 
+        public int Length => rows.Length;
         public Row this[int row] { get => rows[row]; }
         public Row this[string id] { get => rows[idToRow[id.Trim().ToLower()]]; }
 
 #if UNITY_EDITOR
         public bool Deserialize(string json)
         {
+            idToRow.Clear();
             var rows = JsonConvert.DeserializeObject<Dictionary<string, string>[]>(json);
             if (rows == null)
                 return false;

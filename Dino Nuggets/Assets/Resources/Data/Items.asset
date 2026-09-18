@@ -13,18 +13,166 @@ MonoBehaviour:
   m_Name: Items
   m_EditorClassIdentifier: Assembly-CSharp::DN.Spreadsheet
   idToRow:
-  - key: wood
+  - key: table
     value: 0
-  - key: stone
+  - key: wood_sword
     value: 1
+  - key: stone_sword
+    value: 2
+  - key: iron_sword
+    value: 3
+  - key: wood_bow
+    value: 4
+  - key: fishing_rod
+    value: 5
   rows:
   - columns:
     - key: id
-      value: wood
+      value: table
     - key: name
-      value: Wood
+      value: Table
+    - key: description
+      value: A table for crafting basic items.
+    - key: max_stack
+      value: 1
+    - key: inventory_width
+      value: 
+    - key: inventory_height
+      value: 
+    - key: durability
+      value: 
+    - key: despawns
+      value: 
+    - key: attack
+      value: 
+    - key: attack_speed
+      value: 
+    - key: offensive_tool_ids
+      value: 
+    - key: projectile_ids
+      value: 
   - columns:
     - key: id
-      value: stone
+      value: wood_sword
     - key: name
-      value: Stone
+      value: Wood Sword
+    - key: description
+      value: A flimsy blade made from wood.
+    - key: max_stack
+      value: 1
+    - key: inventory_width
+      value: 
+    - key: inventory_height
+      value: 
+    - key: durability
+      value: 
+    - key: despawns
+      value: 
+    - key: attack
+      value: 5
+    - key: attack_speed
+      value: 
+    - key: offensive_tool_ids
+      value: sword
+    - key: projectile_ids
+      value: 
+  - columns:
+    - key: id
+      value: stone_sword
+    - key: name
+      value: Stone Sword
+    - key: description
+      value: A blade made from stone.
+    - key: max_stack
+      value: 1
+    - key: inventory_width
+      value: 
+    - key: inventory_height
+      value: 
+    - key: durability
+      value: 
+    - key: despawns
+      value: 
+    - key: attack
+      value: 10
+    - key: attack_speed
+      value: 
+    - key: offensive_tool_ids
+      value: sword
+    - key: projectile_ids
+      value: 
+  - columns:
+    - key: id
+      value: iron_sword
+    - key: name
+      value: Iron Sword
+    - key: description
+      value: A strong blade made from iron.
+    - key: max_stack
+      value: 1
+    - key: inventory_width
+      value: 
+    - key: inventory_height
+      value: 
+    - key: durability
+      value: 
+    - key: despawns
+      value: 
+    - key: attack
+      value: 20
+    - key: attack_speed
+      value: 
+    - key: offensive_tool_ids
+      value: sword
+    - key: projectile_ids
+      value: 
+  - columns:
+    - key: id
+      value: wood_bow
+    - key: name
+      value: Wood Bow
+    - key: description
+      value: A weak bow made of wood.
+    - key: max_stack
+      value: 1
+    - key: inventory_width
+      value: 
+    - key: inventory_height
+      value: 
+    - key: durability
+      value: 
+    - key: despawns
+      value: 
+    - key: attack
+      value: 10
+    - key: attack_speed
+      value: 
+    - key: offensive_tool_ids
+      value: bow
+    - key: projectile_ids
+      value: wood_arrow
+  - columns:
+    - key: id
+      value: fishing_rod
+    - key: name
+      value: Fishing Rod
+    - key: description
+      value: A rod made for fishing.
+    - key: max_stack
+      value: 1
+    - key: inventory_width
+      value: 
+    - key: inventory_height
+      value: 
+    - key: durability
+      value: 
+    - key: despawns
+      value: 
+    - key: attack
+      value: 
+    - key: attack_speed
+      value: 
+    - key: offensive_tool_ids
+      value: 
+    - key: projectile_ids
+      value: 

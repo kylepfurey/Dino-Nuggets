@@ -13,25 +13,592 @@ MonoBehaviour:
   m_Name: Entities
   m_EditorClassIdentifier: Assembly-CSharp::DN.Spreadsheet
   idToRow:
-  - key: player
+  - key: table
     value: 0
-  - key: tree
+  - key: oak_tree
     value: 1
-  - key: rock
+  - key: pine_tree
     value: 2
+  - key: berry_bush
+    value: 3
+  - key: bone_pile
+    value: 4
+  - key: dodo
+    value: 5
+  - key: dilo
+    value: 6
+  - key: trike
+    value: 7
+  - key: trex
+    value: 8
+  - key: bronto
+    value: 9
+  - key: spino
+    value: 10
+  - key: moschops
+    value: 11
   rows:
   - columns:
     - key: id
-      value: player
+      value: table
     - key: name
-      value: Player
+      value: Table
+    - key: health
+      value: 5
+    - key: defense
+      value: 
+    - key: vulnerable_tool_ids
+      value: axe,fire
+    - key: dropped_exp
+      value: 
+    - key: item_drop_ids
+      value: table
+    - key: item_drop_amounts
+      value: 1
+    - key: item_drop_probability
+      value: 1
+    - key: behavior
+      value: 
+    - key: habitat
+      value: 
+    - key: perception_distance
+      value: 
+    - key: speed
+      value: 
+    - key: attack
+      value: 
+    - key: attack_speed
+      value: 
+    - key: biome_ids
+      value: 
+    - key: ignored_biome_ids
+      value: 
+    - key: spawn_probability
+      value: 
+    - key: max_spawns
+      value: 
+    - key: model_id
+      value: 
+    - key: sfx_id
+      value: wood
+    - key: scale
+      value: 
+    - key: interactable_id
+      value: table
   - columns:
     - key: id
-      value: tree
+      value: oak_tree
     - key: name
-      value: Tree
+      value: Oak Tree
+    - key: health
+      value: 10
+    - key: defense
+      value: 
+    - key: vulnerable_tool_ids
+      value: axe,fire
+    - key: dropped_exp
+      value: 
+    - key: item_drop_ids
+      value: wood,stick,apple
+    - key: item_drop_amounts
+      value: 5,5,1
+    - key: item_drop_probability
+      value: 1,0.5,0.1
+    - key: behavior
+      value: 
+    - key: habitat
+      value: 
+    - key: perception_distance
+      value: 
+    - key: speed
+      value: 
+    - key: attack
+      value: 
+    - key: attack_speed
+      value: 
+    - key: biome_ids
+      value: 
+    - key: ignored_biome_ids
+      value: 
+    - key: spawn_probability
+      value: 
+    - key: max_spawns
+      value: 
+    - key: model_id
+      value: 
+    - key: sfx_id
+      value: wood
+    - key: scale
+      value: 
+    - key: interactable_id
+      value: 
   - columns:
     - key: id
-      value: rock
+      value: pine_tree
     - key: name
-      value: Rock
+      value: Pine Tree
+    - key: health
+      value: 10
+    - key: defense
+      value: 
+    - key: vulnerable_tool_ids
+      value: axe,fire
+    - key: dropped_exp
+      value: 
+    - key: item_drop_ids
+      value: wood,stick
+    - key: item_drop_amounts
+      value: 5,5
+    - key: item_drop_probability
+      value: 1,0.5
+    - key: behavior
+      value: 
+    - key: habitat
+      value: 
+    - key: perception_distance
+      value: 
+    - key: speed
+      value: 
+    - key: attack
+      value: 
+    - key: attack_speed
+      value: 
+    - key: biome_ids
+      value: 
+    - key: ignored_biome_ids
+      value: 
+    - key: spawn_probability
+      value: 
+    - key: max_spawns
+      value: 
+    - key: model_id
+      value: 
+    - key: sfx_id
+      value: wood
+    - key: scale
+      value: 
+    - key: interactable_id
+      value: 
+  - columns:
+    - key: id
+      value: berry_bush
+    - key: name
+      value: Berry Bush
+    - key: health
+      value: 5
+    - key: defense
+      value: 
+    - key: vulnerable_tool_ids
+      value: sword,fire
+    - key: dropped_exp
+      value: 
+    - key: item_drop_ids
+      value: berriy,fiber
+    - key: item_drop_amounts
+      value: 5,5
+    - key: item_drop_probability
+      value: 0.5,0.5
+    - key: behavior
+      value: 
+    - key: habitat
+      value: 
+    - key: perception_distance
+      value: 
+    - key: speed
+      value: 
+    - key: attack
+      value: 
+    - key: attack_speed
+      value: 
+    - key: biome_ids
+      value: 
+    - key: ignored_biome_ids
+      value: 
+    - key: spawn_probability
+      value: 
+    - key: max_spawns
+      value: 
+    - key: model_id
+      value: 
+    - key: sfx_id
+      value: bush
+    - key: scale
+      value: 
+    - key: interactable_id
+      value: 
+  - columns:
+    - key: id
+      value: bone_pile
+    - key: name
+      value: Bone Pile
+    - key: health
+      value: 15
+    - key: defense
+      value: 
+    - key: vulnerable_tool_ids
+      value: pickaxe
+    - key: dropped_exp
+      value: 
+    - key: item_drop_ids
+      value: bone,heavy_bone
+    - key: item_drop_amounts
+      value: 5,2
+    - key: item_drop_probability
+      value: 1,0.3
+    - key: behavior
+      value: 
+    - key: habitat
+      value: 
+    - key: perception_distance
+      value: 
+    - key: speed
+      value: 
+    - key: attack
+      value: 
+    - key: attack_speed
+      value: 
+    - key: biome_ids
+      value: 
+    - key: ignored_biome_ids
+      value: 
+    - key: spawn_probability
+      value: 
+    - key: max_spawns
+      value: 
+    - key: model_id
+      value: 
+    - key: sfx_id
+      value: bone
+    - key: scale
+      value: 
+    - key: interactable_id
+      value: 
+  - columns:
+    - key: id
+      value: dodo
+    - key: name
+      value: Dodo
+    - key: health
+      value: 15
+    - key: defense
+      value: 
+    - key: vulnerable_tool_ids
+      value: 
+    - key: dropped_exp
+      value: 1
+    - key: item_drop_ids
+      value: meat,feather
+    - key: item_drop_amounts
+      value: 2,3
+    - key: item_drop_probability
+      value: 1,0.5
+    - key: behavior
+      value: passive
+    - key: habitat
+      value: 
+    - key: perception_distance
+      value: 25
+    - key: speed
+      value: 0.75
+    - key: attack
+      value: 
+    - key: attack_speed
+      value: 
+    - key: biome_ids
+      value: 
+    - key: ignored_biome_ids
+      value: 
+    - key: spawn_probability
+      value: 
+    - key: max_spawns
+      value: 
+    - key: model_id
+      value: 
+    - key: sfx_id
+      value: 
+    - key: scale
+      value: 
+    - key: interactable_id
+      value: 
+  - columns:
+    - key: id
+      value: dilo
+    - key: name
+      value: Dilophosaurus
+    - key: health
+      value: 40
+    - key: defense
+      value: 1
+    - key: vulnerable_tool_ids
+      value: 
+    - key: dropped_exp
+      value: 10
+    - key: item_drop_ids
+      value: meat,hide
+    - key: item_drop_amounts
+      value: 3,2
+    - key: item_drop_probability
+      value: 1,0.5
+    - key: behavior
+      value: hostile
+    - key: habitat
+      value: 
+    - key: perception_distance
+      value: 25
+    - key: speed
+      value: 1.5
+    - key: attack
+      value: 5
+    - key: attack_speed
+      value: 3
+    - key: biome_ids
+      value: 
+    - key: ignored_biome_ids
+      value: 
+    - key: spawn_probability
+      value: 0.25
+    - key: max_spawns
+      value: 10
+    - key: model_id
+      value: 
+    - key: sfx_id
+      value: 
+    - key: scale
+      value: 
+    - key: interactable_id
+      value: 
+  - columns:
+    - key: id
+      value: trike
+    - key: name
+      value: Triceratops
+    - key: health
+      value: 150
+    - key: defense
+      value: 5
+    - key: vulnerable_tool_ids
+      value: 
+    - key: dropped_exp
+      value: 25
+    - key: item_drop_ids
+      value: meat,keratin
+    - key: item_drop_amounts
+      value: 5,3
+    - key: item_drop_probability
+      value: 1,0.5
+    - key: behavior
+      value: neutral
+    - key: habitat
+      value: 
+    - key: perception_distance
+      value: 20
+    - key: speed
+      value: 2
+    - key: attack
+      value: 15
+    - key: attack_speed
+      value: 2
+    - key: biome_ids
+      value: 
+    - key: ignored_biome_ids
+      value: 
+    - key: spawn_probability
+      value: 0.25
+    - key: max_spawns
+      value: 10
+    - key: model_id
+      value: 
+    - key: sfx_id
+      value: 
+    - key: scale
+      value: 
+    - key: interactable_id
+      value: 
+  - columns:
+    - key: id
+      value: trex
+    - key: name
+      value: T-Rex
+    - key: health
+      value: 200
+    - key: defense
+      value: 5
+    - key: vulnerable_tool_ids
+      value: 
+    - key: dropped_exp
+      value: 100
+    - key: item_drop_ids
+      value: prime_meat,trex_tooth
+    - key: item_drop_amounts
+      value: 10,2
+    - key: item_drop_probability
+      value: 1,1
+    - key: behavior
+      value: hostile
+    - key: habitat
+      value: 
+    - key: perception_distance
+      value: 50
+    - key: speed
+      value: 5
+    - key: attack
+      value: 30
+    - key: attack_speed
+      value: 5
+    - key: biome_ids
+      value: 
+    - key: ignored_biome_ids
+      value: 
+    - key: spawn_probability
+      value: 0.025
+    - key: max_spawns
+      value: 3
+    - key: model_id
+      value: 
+    - key: sfx_id
+      value: 
+    - key: scale
+      value: 
+    - key: interactable_id
+      value: 
+  - columns:
+    - key: id
+      value: bronto
+    - key: name
+      value: Brontosaurus
+    - key: health
+      value: 400
+    - key: defense
+      value: 6
+    - key: vulnerable_tool_ids
+      value: 
+    - key: dropped_exp
+      value: 85
+    - key: item_drop_ids
+      value: prime_meat,bronto_tail
+    - key: item_drop_amounts
+      value: 10,1
+    - key: item_drop_probability
+      value: 1,0.2
+    - key: behavior
+      value: neutral
+    - key: habitat
+      value: 
+    - key: perception_distance
+      value: 30
+    - key: speed
+      value: 2
+    - key: attack
+      value: 10
+    - key: attack_speed
+      value: 1.5
+    - key: biome_ids
+      value: 
+    - key: ignored_biome_ids
+      value: 
+    - key: spawn_probability
+      value: 0.25
+    - key: max_spawns
+      value: 6
+    - key: model_id
+      value: 
+    - key: sfx_id
+      value: 
+    - key: scale
+      value: 
+    - key: interactable_id
+      value: 
+  - columns:
+    - key: id
+      value: spino
+    - key: name
+      value: Spinosaurus
+    - key: health
+      value: 150
+    - key: defense
+      value: 4
+    - key: vulnerable_tool_ids
+      value: 
+    - key: dropped_exp
+      value: 50
+    - key: item_drop_ids
+      value: prime_meat,spino_toe
+    - key: item_drop_amounts
+      value: 5,1
+    - key: item_drop_probability
+      value: 1,0.2
+    - key: behavior
+      value: hostile
+    - key: habitat
+      value: 
+    - key: perception_distance
+      value: 45
+    - key: speed
+      value: 6
+    - key: attack
+      value: 40
+    - key: attack_speed
+      value: 6
+    - key: biome_ids
+      value: 
+    - key: ignored_biome_ids
+      value: 
+    - key: spawn_probability
+      value: 0.03
+    - key: max_spawns
+      value: 4
+    - key: model_id
+      value: 
+    - key: sfx_id
+      value: 
+    - key: scale
+      value: 
+    - key: interactable_id
+      value: 
+  - columns:
+    - key: id
+      value: moschops
+    - key: name
+      value: Moschops
+    - key: health
+      value: 50
+    - key: defense
+      value: 2
+    - key: vulnerable_tool_ids
+      value: 
+    - key: dropped_exp
+      value: 15
+    - key: item_drop_ids
+      value: meat,hide
+    - key: item_drop_amounts
+      value: 3,2
+    - key: item_drop_probability
+      value: 1,0.5
+    - key: behavior
+      value: neutral
+    - key: habitat
+      value: 
+    - key: perception_distance
+      value: 25
+    - key: speed
+      value: 2
+    - key: attack
+      value: 15
+    - key: attack_speed
+      value: 4
+    - key: biome_ids
+      value: 
+    - key: ignored_biome_ids
+      value: 
+    - key: spawn_probability
+      value: 0.3
+    - key: max_spawns
+      value: 6
+    - key: model_id
+      value: 
+    - key: sfx_id
+      value: 
+    - key: scale
+      value: 
+    - key: interactable_id
+      value: 

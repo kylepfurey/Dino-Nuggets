@@ -4,12 +4,21 @@ namespace DN
 {
     public class Entity : MonoBehaviour
     {
+        public enum Behavior { Static, Passive, Neutral, Hostile, Projectile, }
+        public enum Habitat { Land, Air, Sea, }
+
         [SerializeField] string id;
 
-        public virtual string Type => "Entities";
-        public string Id => id;
+        EntitySfx sfx;
 
-        protected virtual void Awake() => LoadProperties(GameManager.Instance.Spreadsheets[Type][Id]);
-        protected virtual void LoadProperties(Spreadsheet.Row properties) { }
+        public string Id => id;
+        public EntitySfx Sfx => sfx;
+
+        public void InitId(string id) { this.id = id; }
+        void Start()
+        {
+            Spreadsheet.Row properties = GameManager.Instance.EntitiesSpreadsheet[id];
+            sfx = GameManager.Instance.SfxTable.Get(properties.String("sfx_id"));
+        }
     }
 }

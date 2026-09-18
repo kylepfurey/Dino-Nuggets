@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
@@ -44,7 +43,7 @@ namespace DN
                 result = result.Trim();
                 return result;
             }
-            public readonly string[] Array(string column, string[] defaultValue = null!)
+            public readonly string[] Array(string column, string[] defaultValue = null)
             {
                 if (!columns.TryGetValue(column.Trim().ToLower(), out var str))
                     return defaultValue ?? System.Array.Empty<string>();

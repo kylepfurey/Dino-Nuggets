@@ -17,14 +17,8 @@ MonoBehaviour:
     value: 0
   - key: wood_sword
     value: 1
-  - key: stone_sword
-    value: 2
-  - key: iron_sword
-    value: 3
   - key: wood_bow
-    value: 4
-  - key: fishing_rod
-    value: 5
+    value: 2
   rows:
   - columns:
     - key: id
@@ -78,56 +72,6 @@ MonoBehaviour:
       value: 
   - columns:
     - key: id
-      value: stone_sword
-    - key: name
-      value: Stone Sword
-    - key: description
-      value: A blade made from stone.
-    - key: max_stack
-      value: 1
-    - key: inventory_width
-      value: 
-    - key: inventory_height
-      value: 
-    - key: durability
-      value: 
-    - key: despawns
-      value: 
-    - key: attack
-      value: 10
-    - key: attack_speed
-      value: 
-    - key: offensive_tool_ids
-      value: sword
-    - key: projectile_ids
-      value: 
-  - columns:
-    - key: id
-      value: iron_sword
-    - key: name
-      value: Iron Sword
-    - key: description
-      value: A strong blade made from iron.
-    - key: max_stack
-      value: 1
-    - key: inventory_width
-      value: 
-    - key: inventory_height
-      value: 
-    - key: durability
-      value: 
-    - key: despawns
-      value: 
-    - key: attack
-      value: 20
-    - key: attack_speed
-      value: 
-    - key: offensive_tool_ids
-      value: sword
-    - key: projectile_ids
-      value: 
-  - columns:
-    - key: id
       value: wood_bow
     - key: name
       value: Wood Bow
@@ -151,28 +95,3 @@ MonoBehaviour:
       value: bow
     - key: projectile_ids
       value: wood_arrow
-  - columns:
-    - key: id
-      value: fishing_rod
-    - key: name
-      value: Fishing Rod
-    - key: description
-      value: A rod made for fishing.
-    - key: max_stack
-      value: 1
-    - key: inventory_width
-      value: 
-    - key: inventory_height
-      value: 
-    - key: durability
-      value: 
-    - key: despawns
-      value: 
-    - key: attack
-      value: 
-    - key: attack_speed
-      value: 
-    - key: offensive_tool_ids
-      value: 
-    - key: projectile_ids
-      value: 

@@ -15,41 +15,12 @@ MonoBehaviour:
   idToRow:
   - key: oak_forest
     value: 0
-  - key: pine_forest
-    value: 1
   rows:
   - columns:
     - key: id
       value: oak_forest
     - key: name
       value: Oak Forest
-    - key: adjacent_biome_ids
-      value: 
-    - key: adjacent_biome_probability
-      value: 
-    - key: min_radius
-      value: 
-    - key: max_radius
-      value: 
-    - key: max_depth
-      value: 
-    - key: max_height
-      value: 
-    - key: smoothness
-      value: 
-    - key: water_level
-      value: 
-    - key: min_spawns
-      value: 
-    - key: max_spawns
-      value: 
-    - key: material_id
-      value: 
-  - columns:
-    - key: id
-      value: pine_forest
-    - key: name
-      value: Pine Forest
     - key: adjacent_biome_ids
       value: 
     - key: adjacent_biome_probability

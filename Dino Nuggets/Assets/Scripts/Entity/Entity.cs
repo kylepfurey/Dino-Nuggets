@@ -11,20 +11,14 @@ namespace DN
 
         EntitySfx entitySfx;
 
-        public string EntityId
-        {
-            get => entityId;
-            set
-            {
-                if (string.IsNullOrEmpty(entityId))
-                    Debug.LogError($"Overwriting entity \"{gameObject.name}\"'s id of {entityId} with {value}", gameObject);
-                entityId = value;
-            }
-        }
+        public string EntityId => entityId;
         public EntitySfx EntitySfx => entitySfx;
 
-        void Start()
+        [Rpc]
+        void SetEntityId(string json)
         {
+            entityId = Network.Deserialize<string>(json);
+
             Spreadsheet.Row properties = GameManager.Instance.EntitiesSpreadsheet[entityId];
             entitySfx = GameManager.Instance.SfxTable.Get(properties.String("sfx_id"));
         }

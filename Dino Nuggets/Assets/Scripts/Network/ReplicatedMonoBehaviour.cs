@@ -1,6 +1,7 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 namespace DN
@@ -8,67 +9,69 @@ namespace DN
     public abstract class ReplicatedMonoBehaviour : MonoBehaviour
     {
         [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
-        protected class RPCAttribute : Attribute { }
-        public delegate void RPC(string json);
+        protected class RpcAttribute : Attribute { }
+        public delegate void Rpc(string json);
 
-        uint netId;
-        Dictionary<string, RPC> serverRPCs = new(); // name -> method
-        Dictionary<RPC, string> clientRPCs = new(); // method -> name
+        uint netId = 0;
+        Dictionary<string, Rpc> rpcMethods = new(); // name -> method
+        Dictionary<Rpc, string> rpcNames = new(); // method -> name
 
         public uint NetId => netId;
-        public PublicClient? OwningClient { get; private set; }
-        public bool HasOwnership => Network.Instance.IsServer || OwningClient == Network.Instance.MyPublicClient;
+        public bool IsOwned => Network.Instance.IsServer || Owner == Network.Instance.MyClient;
+        public Client? Owner { get; private set; }
 
-        protected virtual void Awake() => BindRPCs();
+        protected virtual void Awake() => BindRpcs();
 
-        void BindRPCs()
+        void BindRpcs()
         {
             Type type = GetType();
-            foreach (var method in type.GetMethods())
+            foreach (var method in type.GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
             {
-                if (!method.IsDefined(typeof(RPCAttribute), true))
+                if (!method.IsDefined(typeof(RpcAttribute), true))
                     continue;
 
-                Delegate callback = method.IsStatic ?
-                    Delegate.CreateDelegate(typeof(RPC), method, throwOnBindFailure: false) :
-                    Delegate.CreateDelegate(typeof(RPC), this, method, throwOnBindFailure: false);
+                Delegate rpc = method.IsStatic ?
+                    Delegate.CreateDelegate(typeof(Rpc), method, throwOnBindFailure: false) :
+                    Delegate.CreateDelegate(typeof(Rpc), this, method, throwOnBindFailure: false);
 
-                if (callback == null)
+                if (rpc == null)
                 {
-                    Debug.LogError($"{method.Name} is not an RPC calling convention: void RPC(string json)", gameObject);
+                    Debug.LogError($"{method.Name} is not an rpc calling convention: void (string json)", gameObject);
                     continue;
                 }
 
-                serverRPCs[method.Name] = (RPC)callback;
-                clientRPCs[(RPC)callback] = method.Name;
+                rpcMethods[method.Name] = (Rpc)rpc;
+                rpcNames[(Rpc)rpc] = method.Name;
             }
         }
-
-        public void CallRPC(RPC rpc, object arg, bool reliable = true)
+        public bool HasRpc(string name) => rpcMethods.ContainsKey(name);
+        public void CallRpc(Rpc? rpc, object? arg, bool reliable = true)
         {
-            if (!HasOwnership)
+            if (!IsOwned)
             {
-                Debug.LogError("Calling RPC on unowned component", gameObject);
+                Debug.LogError("Calling rpc on unowned component", gameObject);
                 return;
             }
 
             if (rpc == null)
                 return; // No-op
 
-            if (!clientRPCs.TryGetValue(rpc, out var name))
+            if (!rpcNames.TryGetValue(rpc, out var name))
             {
-                Debug.LogError($"Calling an RPC without the [RPC] attribute", gameObject);
+                Debug.LogError($"Calling rpc without the [Rpc] attribute", gameObject);
                 return;
             }
 
-            Network.Instance.PublicServer.BroadcastRPC(netId, name, Network.Serialize(arg), reliable);
+            if (Network.Instance.IsServer)
+                Network.Instance.Server!.SendRpcToClients(netId, name, Network.Serialize(arg), reliable); // Broadcast rpc as server
+            else
+                Network.Instance.MyClient!.SendRpcToServer(netId, name, Network.Serialize(arg), reliable); // Send rpc to server for broadcast
         }
-
-        public void ReceiveRPC(string name, string json)
+        public void ReceiveRpc(string name, string json)
         {
-            if (!serverRPCs.TryGetValue(name, out var rpc))
+            if (!rpcMethods.TryGetValue(name, out var rpc))
             {
-                Debug.LogError($"Received unknown RPC \"{name}\"", gameObject);
+                Debug.LogError($"Received unknown rpc \"{name}\"", gameObject);
                 return;
             }
 

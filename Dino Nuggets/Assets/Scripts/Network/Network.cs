@@ -8,13 +8,24 @@ namespace DN
     {
         public static Network Instance => GameManager.Instance.Network;
 
-        public bool IsServer => PrivateServer != null;
-        public PrivateServer? PrivateServer => PublicServer.PrivateServer;
-        public PublicServer PublicServer { get; private set; }
-        public PrivateClient? MyPrivateClient { get; private set; }
-        public PublicClient? MyPublicClient => MyPrivateClient?.PublicClient;
+        [Serializable]
+        public struct Message
+        {
+            public uint NetId;
+            public string RpcName;
+            public string Json;
+            public bool Reliable;
+        }
 
-        public static string Serialize(object obj)
+        [SerializeField] int appId;
+
+        public bool IsServer => Server != null;
+        public Server? Server { get; private set; }
+        public bool IsClient => MyClient != null;
+        public Client? MyClient { get; private set; }
+        public bool IsHost => IsServer && IsClient;
+
+        public static string Serialize(object? obj)
         {
             if (obj == null)
                 return string.Empty;
@@ -29,9 +40,9 @@ namespace DN
                 return string.Empty;
             }
         }
-        public static T? Deserialize<T>(string json)
+        public static T? Deserialize<T>(string? json)
         {
-            if (json == string.Empty)
+            if (json == null || json == string.Empty)
                 return default(T);
 
             try

@@ -11,14 +11,19 @@ namespace DN
 {
     public class Client : ConnectionManager
     {
-        uint clientId;
-        Dictionary<uint, ReplicatedMonoBehaviour> replicatedComponents = new();
+        public Dictionary<uint, ReplicatedMonoBehaviour> ReplicatedComponents = new();
 
-        public uint ClientId => clientId;
+        public ulong ClientId => SteamClient.SteamId.Value; // Client id 0 is always the server
 
         public void SendRpcToServer(uint netId, string name, string json, bool reliable)
         {
-            if (!replicatedComponents.TryGetValue(netId, out var replicatedComponent) || replicatedComponent == null)
+            if (netId == 0)
+            {
+                Debug.LogError($"Outgoing rpc to net id of 0", Network.Instance.gameObject);
+                return;
+            }
+
+            if (!ReplicatedComponents.TryGetValue(netId, out var replicatedComponent) || replicatedComponent == null)
             {
                 Debug.LogError($"Outgoing rpc to missing component", Network.Instance.gameObject);
                 return;
@@ -30,7 +35,7 @@ namespace DN
                 return;
             }
 
-            if (replicatedComponent.Owner != this)
+            if (replicatedComponent.OwnerId == 0 || replicatedComponent.OwnerId != ClientId)
             {
                 Debug.LogError($"Outgoing rpc to unowned component", Network.Instance.gameObject);
                 return;
@@ -69,7 +74,7 @@ namespace DN
                 Marshal.Copy(data, buffer, 0, size);
                 Network.Message message = Network.Deserialize<Network.Message>(Encoding.UTF8.GetString(buffer));
 
-                if (!replicatedComponents.TryGetValue(message.NetId, out var replicatedComponent) || replicatedComponent == null)
+                if (!ReplicatedComponents.TryGetValue(message.NetId, out var replicatedComponent) || replicatedComponent == null)
                 {
                     Debug.LogError($"Incoming rpc to missing component", Network.Instance.gameObject);
                     return;
@@ -82,5 +87,7 @@ namespace DN
                 Debug.LogError($"Incoming rpc error: {error.Message}", Network.Instance.gameObject);
             }
         }
+        public override void OnDisconnected(ConnectionInfo info) =>
+            Network.Instance.Disconnect(Network.Instance.MainMenuScene); // Server cleans up net id
     }
 }

@@ -1,5 +1,6 @@
 using System.Text;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace DN
 {
@@ -25,7 +26,12 @@ namespace DN
         public Table MaterialTable => materialTable;
         public Network Network => network;
 
-        void Awake() => Instance = this;
+        void Start()
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+            SceneManager.LoadScene(Network.Instance.MainMenuScene);
+        }
         void OnDestroy() { if (Instance == this) Instance = null; }
 
         public void SetSeed(int seed) => Random.InitState(seed);

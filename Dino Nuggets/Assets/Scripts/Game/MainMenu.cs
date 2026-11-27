@@ -2,6 +2,7 @@ using Steamworks.Data;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace DN
@@ -15,12 +16,26 @@ namespace DN
         [SerializeField] TextMeshProUGUI playerList;
         [SerializeField] Button startButton;
         [SerializeField] Button[] lobbyButtons;
+        [SerializeField] InputActionReference backButton;
+        [SerializeField] AudioClip backSfx;
         Selectable previousSelectable;
         Lobby[] lobbies;
 
         void Update()
         {
-            if (hostMenu.gameObject.activeSelf)
+            if (backButton.ToInputAction().WasPressedThisFrame())
+            {
+                backSfx.SpawnSound();
+
+                if (mainMenu.activeSelf)
+                    QuitGame();
+                else
+                    GoToMainMenu();
+            }
+        }
+        void FixedUpdate()
+        {
+            if (hostMenu.activeSelf)
             {
                 playerList.text = "Players:\n";
                 foreach (var client in Network.Instance.Lobby!.Value.Members)
@@ -106,12 +121,14 @@ namespace DN
 
             for (int i = 0; i < lobbies.Length; ++i)
             {
-                lobbyButtons[i].gameObject.SetActive(true);
-                lobbyButtons[i].GetComponent<TextMeshProUGUI>().text = lobbies[i].GetData("name") +
-                    $"{lobbies[i].MemberCount}/{lobbies[i].MaxMembers}";
-                lobbyButtons[i].onClick.AddListener(async () =>
+                Button lobbyButton = lobbyButtons[i];
+                Lobby lobby = lobbies[i];
+                lobbyButton.gameObject.SetActive(true);
+                lobbyButton.GetComponentInChildren<TextMeshProUGUI>().text = lobby.GetData("name") +
+                    $" {lobby.MemberCount}/{lobby.MaxMembers}";
+                lobbyButton.onClick.AddListener(async () =>
                 {
-                    if (!await Network.Instance.Connect(lobbies[i]))
+                    if (!await Network.Instance.Connect(lobby))
                         return;
 
                     GoToLobbyMenu();

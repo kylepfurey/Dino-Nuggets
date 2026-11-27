@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace DN
 {
-    public class ButtonExtras : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class ButtonExtras : MonoBehaviour, IPointerEnterHandler
     {
         Button button;
         [SerializeField] AudioClip hoverSfx;
@@ -32,16 +32,7 @@ namespace DN
                 wasHovered = false;
         }
 
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            button.Select();
-            hoverSfx.SpawnSound();
-            wasHovered = true;
-        }
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            wasHovered = false;
-        }
+        public void OnPointerEnter(PointerEventData eventData) => button.Select();
 
         void CheckInput()
         {

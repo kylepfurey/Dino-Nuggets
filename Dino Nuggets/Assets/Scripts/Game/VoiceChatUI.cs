@@ -11,7 +11,7 @@ namespace DN
         [SerializeField] InputActionReference pushToTalk;
         VoiceChat voiceChat;
 
-        void Update()
+        void FixedUpdate()
         {
             if (voiceChat == null)
             {
@@ -20,15 +20,19 @@ namespace DN
                 return;
             }
 
-            if (GameManager.Instance.Settings.PushToTalk)
+            switch (GameManager.Instance.Settings.PushToTalk)
             {
-                voiceChat.SendAudio = pushToTalk.ToInputAction().IsPressed();
-                icon.enabled = voiceChat.SendAudio;
-            }
-            else
-            {
-                voiceChat.SendAudio = !pushToTalk.ToInputAction().IsPressed();
-                icon.enabled = voiceChat.SendAudio && SteamUser.HasVoiceData;
+                case 0:
+                    voiceChat.SendAudio = pushToTalk.ToInputAction().IsPressed();
+                    icon.enabled = voiceChat.SendAudio;
+                    break;
+                case 1:
+                    voiceChat.SendAudio = !pushToTalk.ToInputAction().IsPressed();
+                    icon.enabled = voiceChat.SendAudio && SteamUser.HasVoiceData;
+                    break;
+                case 2:
+                    icon.enabled = false;
+                    break;
             }
         }
     }

@@ -30,12 +30,12 @@ namespace DN
                     PlayerPrefs.Save();
                 }
             }
-            public bool PushToTalk
+            public int PushToTalk // 0 = push to talk, 1 = open mic, 2 = muted
             {
-                get => PlayerPrefs.GetInt("pushToTalk", 1) == 1;
+                get => PlayerPrefs.GetInt("pushToTalk", 0);
                 set
                 {
-                    PlayerPrefs.SetInt("pushToTalk", value ? 1 : 0);
+                    PlayerPrefs.SetInt("pushToTalk", value % 3);
                     PlayerPrefs.Save();
                 }
             }

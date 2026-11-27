@@ -29,7 +29,6 @@ namespace DN
         [SerializeField] string mainMenuScene;
         [SerializeField] Dictionary<string, GameObject> prefabs;
 
-        public uint AppId => (uint)appId;
         public string MainMenuScene => mainMenuScene;
         public Lobby? Lobby { get; private set; }
         public bool IsServer => Server != null;
@@ -39,12 +38,13 @@ namespace DN
         public bool IsHost => IsServer && IsClient;
         public RpcHandler? RpcHandler { get; private set; }
         public IReadOnlyDictionary<string, GameObject> Prefabs => prefabs;
+        public bool MuteVoiceChat => GameManager.Instance.Settings.PushToTalk == 2; // 0 = push to talk, 1 = open mic, 2 = muted
 
         void Awake()
         {
             try
             {
-                SteamClient.Init(AppId, asyncCallbacks: false);
+                SteamClient.Init((uint)appId, asyncCallbacks: false);
             }
             catch (Exception error)
             {
@@ -118,7 +118,11 @@ namespace DN
                     if (await lobby.Join() != RoomEnter.Success)
                     {
                         Debug.LogError($"Failed to join lobby", gameObject);
-                        Lobby = null;
+                        if (!IsServer)
+                        {
+                            Lobby.Value.Leave();
+                            Lobby = null;
+                        }
                         return false;
                     }
 
@@ -132,7 +136,7 @@ namespace DN
                     else
                     {
                         Debug.LogError("Failed to create client", gameObject);
-                        if (Lobby != null)
+                        if (!IsServer)
                         {
                             Lobby.Value.Leave();
                             Lobby = null;
@@ -142,7 +146,7 @@ namespace DN
                 catch (Exception error)
                 {
                     Debug.LogError($"Failed to create client: {error.Message}", gameObject);
-                    if (Lobby != null)
+                    if (Lobby != null && !IsServer)
                     {
                         Lobby.Value.Leave();
                         Lobby = null;
@@ -176,35 +180,65 @@ namespace DN
 
             return true;
         }
+        bool disconnecting = false;
         public void Disconnect(string? loadedScene = null)
         {
-            if (RpcHandler != null)
-            {
-                Destroy(RpcHandler);
-                RpcHandler = null;
-            }
+            if (disconnecting)
+                return;
+            disconnecting = true;
 
-            if (Lobby != null)
+            try
             {
-                Lobby.Value.SetJoinable(false);
-                Lobby.Value.Leave();
-                Lobby = null;
-            }
+                if (Lobby != null)
+                {
+                    if (Server != null)
+                        Lobby.Value.SetJoinable(false);
+                    Lobby.Value.Leave();
+                    Lobby = null;
+                }
 
-            if (MyClient != null)
+                if (MyClient != null)
+                {
+                    var replicatedComponents = MyClient.ReplicatedComponents.Values;
+
+                    MyClient.Close(); // Cleans up remote objects
+                    MyClient = null;
+
+                    if (Server != null)
+                    {
+                        Server.Close();
+                        Server = null;
+                    }
+
+                    foreach (var replicatedComponent in replicatedComponents)
+                        if (replicatedComponent != null && replicatedComponent.NetId != 1) // RpcHandler handled
+                            Destroy(replicatedComponent.gameObject);
+                }
+                else if (Server != null)
+                {
+                    var replicatedComponents = Server.ReplicatedComponents.Values;
+
+                    Server.Close();
+                    Server = null;
+
+                    foreach (var replicatedComponent in replicatedComponents)
+                        if (replicatedComponent != null && replicatedComponent.NetId != 1) // RpcHandler handled
+                            Destroy(replicatedComponent.gameObject);
+                }
+
+                if (RpcHandler != null)
+                {
+                    Destroy(RpcHandler);
+                    RpcHandler = null;
+                }
+
+                if (!string.IsNullOrEmpty(loadedScene))
+                    SceneManager.LoadScene(loadedScene);
+            }
+            finally
             {
-                MyClient.Close();
-                MyClient = null;
+                disconnecting = false;
             }
-
-            if (Server != null)
-            {
-                Server.Close();
-                Server = null;
-            }
-
-            if (!string.IsNullOrEmpty(loadedScene))
-                SceneManager.LoadScene(loadedScene);
         }
 
         static JsonSerializerSettings serializerSettings = new() { ContractResolver = new PublicFieldSerializer() };

@@ -37,7 +37,18 @@ namespace DN
             seedInput.text = Random.Range(0, int.MaxValue).ToString();
             sensitivitySlider.value = GameManager.Instance.Settings.Sensitivity;
             volumeSlider.value = GameManager.Instance.Settings.Volume;
-            pushToTalkText.text = GameManager.Instance.Settings.PushToTalk ? "Push To Talk" : "Open Mic";
+            switch (GameManager.Instance.Settings.PushToTalk)
+            {
+                case 0:
+                    pushToTalkText.text = "Push To Talk";
+                    break;
+                case 1:
+                    pushToTalkText.text = "Open Mic";
+                    break;
+                case 2:
+                    pushToTalkText.text = "Muted";
+                    break;
+            }
         }
         void Update()
         {
@@ -69,7 +80,7 @@ namespace DN
 
         public void GoToMainMenu()
         {
-            Network.Instance.Disconnect(null);
+            Network.Instance.Disconnect();
 
             mainMenu.SetActive(true);
             hostMenu.SetActive(false);
@@ -164,8 +175,19 @@ namespace DN
         public void SetVolume(Slider slider) => GameManager.Instance.Settings.Volume = slider.value;
         public void TogglePushToTalk()
         {
-            GameManager.Instance.Settings.PushToTalk = !GameManager.Instance.Settings.PushToTalk;
-            pushToTalkText.text = GameManager.Instance.Settings.PushToTalk ? "Push To Talk" : "Open Mic";
+            ++GameManager.Instance.Settings.PushToTalk;
+            switch (GameManager.Instance.Settings.PushToTalk)
+            {
+                case 0:
+                    pushToTalkText.text = "Push To Talk";
+                    break;
+                case 1:
+                    pushToTalkText.text = "Open Mic";
+                    break;
+                case 2:
+                    pushToTalkText.text = "Muted";
+                    break;
+            }
         }
         public void QuitGame() => Application.Quit();
 

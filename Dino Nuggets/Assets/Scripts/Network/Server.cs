@@ -31,7 +31,7 @@ namespace DN
             base.OnConnected(connection, info);
 
             if (Network.Instance.Prefabs.ContainsKey("VoiceChat"))
-                Instantiate(info.Identity.SteamId.Value, "VoiceChat", 1);
+                Instantiate(info.Identity.SteamId.Value, "VoiceChat", 1); // Parent to RpcHandler
         }
         public void SendRpcToClients(uint netId, string name, string json, bool reliable)
         {
@@ -126,12 +126,12 @@ namespace DN
         {
             List<ReplicatedMonoBehaviour> deleted = new();
             foreach (var replicatedComponent in ReplicatedComponents.Values)
-                if (replicatedComponent.OwnerId != 0 && info.Identity.SteamId == replicatedComponent.OwnerId)
+                if (replicatedComponent != null && replicatedComponent.OwnerId != 0 && info.Identity.SteamId == replicatedComponent.OwnerId)
                     deleted.Add(replicatedComponent);
             foreach (var replicatedComponent in deleted)
                 UnityEngine.Object.Destroy(replicatedComponent.gameObject); // Cleans up net id
 
-            connection.Close();
+            base.OnDisconnected(connection, info);
         }
 
         public void LoadScene(string sceneName) =>

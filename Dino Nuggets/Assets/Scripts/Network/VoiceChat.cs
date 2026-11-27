@@ -9,6 +9,7 @@ namespace DN
     public class VoiceChat : ReplicatedMonoBehaviour
     {
         public AudioSource AudioSource;
+        public bool Muted;
         Queue<float> samples = new();
         int maxSamples;
         MemoryStream pcm = new();
@@ -22,7 +23,6 @@ namespace DN
                     SteamUser.VoiceRecord = value;
             }
         }
-        public bool Muted { get; set; }
 
         protected override void Awake()
         {
@@ -47,7 +47,7 @@ namespace DN
                 return;
 
             byte[] audio = SteamUser.ReadVoiceDataBytes();
-            if (audio == null || audio.Length == 0 || Muted)
+            if (audio == null || audio.Length == 0 || Muted || Network.Instance.MuteVoiceChat)
                 return;
 
             CallRpc(SendVoiceRpc, audio, reliable: false);
@@ -71,7 +71,7 @@ namespace DN
         [Rpc]
         void SendVoiceRpc(string json)
         {
-            if (!enabled || IsOwned || !Network.Instance.IsClient || Muted)
+            if (!enabled || IsOwned || !Network.Instance.IsClient || Muted || Network.Instance.MuteVoiceChat)
                 return;
 
             byte[]? audio = Network.Deserialize<byte[]?>(json);

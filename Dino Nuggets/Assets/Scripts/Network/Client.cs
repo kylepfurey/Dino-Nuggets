@@ -87,7 +87,14 @@ namespace DN
                 Debug.LogError($"Incoming rpc error: {error.Message}", Network.Instance.gameObject);
             }
         }
-        public override void OnDisconnected(ConnectionInfo info) =>
+        public override void OnDisconnected(ConnectionInfo info)
+        {
+            if (Network.Instance.MyClient != this)
+                return;
+
             Network.Instance.Disconnect(Network.Instance.MainMenuScene); // Server cleans up net id
+
+            base.OnDisconnected(info);
+        }
     }
 }

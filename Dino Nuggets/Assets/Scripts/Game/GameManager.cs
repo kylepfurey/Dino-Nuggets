@@ -10,12 +10,35 @@ namespace DN
     {
         public static GameManager Instance { get; private set; }
 
-        [Serializable]
         public class SaveData
         {
-            public float Sensitivity;
-            public float Volume;
-            public bool PushToTalk;
+            public float Sensitivity
+            {
+                get => PlayerPrefs.GetFloat("sensitivity", 1.0f);
+                set
+                {
+                    PlayerPrefs.SetFloat("sensitivity", value);
+                    PlayerPrefs.Save();
+                }
+            }
+            public float Volume
+            {
+                get => PlayerPrefs.GetFloat("volume", 0.5f);
+                set
+                {
+                    PlayerPrefs.SetFloat("volume", value);
+                    PlayerPrefs.Save();
+                }
+            }
+            public bool PushToTalk
+            {
+                get => PlayerPrefs.GetInt("pushToTalk", 1) == 1;
+                set
+                {
+                    PlayerPrefs.SetInt("pushToTalk", value ? 1 : 0);
+                    PlayerPrefs.Save();
+                }
+            }
         }
 
         [SerializeField] Spreadsheet entitiesSpreadsheet;
@@ -26,7 +49,6 @@ namespace DN
         [SerializeField] SfxTable sfxTable;
         [SerializeField] Table materialTable;
         [SerializeField] Network network;
-        public SaveData Settings;
 
         public Spreadsheet EntitiesSpreadsheet => entitiesSpreadsheet;
         public Spreadsheet ItemsSpreadsheet => itemsSpreadsheet;
@@ -36,6 +58,7 @@ namespace DN
         public SfxTable SfxTable => sfxTable;
         public Table MaterialTable => materialTable;
         public Network Network => network;
+        public SaveData Settings { get; } = new SaveData();
 
         void Start()
         {

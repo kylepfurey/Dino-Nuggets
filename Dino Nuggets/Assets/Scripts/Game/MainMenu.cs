@@ -9,21 +9,42 @@ namespace DN
 {
     public class MainMenu : MonoBehaviour
     {
+        [SerializeField] Transform camera;
+        [SerializeField] Vector3 deltaRotation;
+
         [SerializeField] GameObject mainMenu;
         [SerializeField] GameObject hostMenu;
         [SerializeField] GameObject joinMenu;
         [SerializeField] GameObject settingsMenu;
+
         [SerializeField] TextMeshProUGUI playerList;
+        [SerializeField] TMP_InputField seedInput;
         [SerializeField] Button startButton;
+
         [SerializeField] Button[] lobbyButtons;
+        [SerializeField] Slider sensitivitySlider;
+        [SerializeField] Slider volumeSlider;
+        [SerializeField] TextMeshProUGUI pushToTalkText;
+
         [SerializeField] InputActionReference backButton;
         [SerializeField] AudioClip backSfx;
+
         Selectable previousSelectable;
         Lobby[] lobbies;
 
+        void Start()
+        {
+            seedInput.text = Random.Range(0, int.MaxValue).ToString();
+            sensitivitySlider.value = GameManager.Instance.Settings.Sensitivity;
+            volumeSlider.value = GameManager.Instance.Settings.Volume;
+            pushToTalkText.text = GameManager.Instance.Settings.PushToTalk ? "Push To Talk" : "Open Mic";
+        }
         void Update()
         {
-            if (backButton.ToInputAction().WasPressedThisFrame())
+            camera.Rotate(deltaRotation * Time.deltaTime);
+
+            if (backButton.ToInputAction().WasPressedThisFrame() &&
+                EventSystem.current.currentSelectedGameObject.GetComponent<TMP_InputField>() == null)
             {
                 backSfx.SpawnSound();
 
@@ -40,6 +61,8 @@ namespace DN
                 playerList.text = "Players:\n";
                 foreach (var client in Network.Instance.Lobby!.Value.Members)
                     playerList.text += client.Name;
+
+                seedInput.gameObject.SetActive(Network.Instance.IsHost);
                 startButton.gameObject.SetActive(Network.Instance.IsHost);
             }
         }
@@ -99,6 +122,8 @@ namespace DN
 
         public void StartGame(string gameScene)
         {
+            GameManager.Instance.SetSeed(seedInput.text);
+
             if (!Network.Instance.StartGame(gameScene))
                 return;
 
@@ -134,6 +159,13 @@ namespace DN
                     GoToLobbyMenu();
                 });
             }
+        }
+        public void SetSensitivity(Slider slider) => GameManager.Instance.Settings.Sensitivity = slider.value;
+        public void SetVolume(Slider slider) => GameManager.Instance.Settings.Volume = slider.value;
+        public void TogglePushToTalk()
+        {
+            GameManager.Instance.Settings.PushToTalk = !GameManager.Instance.Settings.PushToTalk;
+            pushToTalkText.text = GameManager.Instance.Settings.PushToTalk ? "Push To Talk" : "Open Mic";
         }
         public void QuitGame() => Application.Quit();
 

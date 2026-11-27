@@ -12,7 +12,6 @@ namespace DN
     public class Server : SocketManager
     {
         uint nextNetId = 2; // Net id 0 is not set, net id 1 is always the RpcHandler
-        public Dictionary<uint, ReplicatedMonoBehaviour> ReplicatedComponents = new();
 
         public override void OnConnecting(Connection connection, ConnectionInfo info)
         {
@@ -41,7 +40,7 @@ namespace DN
                 return;
             }
 
-            if (!ReplicatedComponents.TryGetValue(netId, out var replicatedComponent) || replicatedComponent == null)
+            if (!Network.Instance.ReplicatedComponents.TryGetValue(netId, out var replicatedComponent) || replicatedComponent == null)
             {
                 Debug.LogError($"Outgoing rpc to missing component", Network.Instance.gameObject);
                 return;
@@ -91,7 +90,7 @@ namespace DN
                 Marshal.Copy(data, buffer, 0, size);
                 Network.Message message = Network.Deserialize<Network.Message>(Encoding.UTF8.GetString(buffer));
 
-                if (!ReplicatedComponents.TryGetValue(message.NetId, out var replicatedComponent) || replicatedComponent == null)
+                if (!Network.Instance.ReplicatedComponents.TryGetValue(message.NetId, out var replicatedComponent) || replicatedComponent == null)
                 {
                     Debug.LogError($"Incoming rpc to missing component", Network.Instance.gameObject);
                     return;
@@ -125,7 +124,7 @@ namespace DN
         public override void OnDisconnected(Connection connection, ConnectionInfo info)
         {
             List<ReplicatedMonoBehaviour> deleted = new();
-            foreach (var replicatedComponent in ReplicatedComponents.Values)
+            foreach (var replicatedComponent in Network.Instance.ReplicatedComponents.Values)
                 if (replicatedComponent != null && replicatedComponent.OwnerId != 0 && info.Identity.SteamId == replicatedComponent.OwnerId)
                     deleted.Add(replicatedComponent);
             foreach (var replicatedComponent in deleted)

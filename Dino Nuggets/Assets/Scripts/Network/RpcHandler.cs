@@ -59,28 +59,12 @@ namespace DN
             Transform transform = gameObject.transform;
             if (message.Value.ParentNetId == 0)
                 transform.parent = null;
+            else if (Network.Instance.ReplicatedComponents.TryGetValue(message.Value.ParentNetId, out var replicatedComponent))
+                transform.parent = replicatedComponent.transform;
             else
             {
-                if (Network.Instance.IsServer)
-                {
-                    if (Network.Instance.Server!.ReplicatedComponents.TryGetValue(message.Value.ParentNetId, out var replicatedComponent))
-                        transform.parent = replicatedComponent.transform;
-                    else
-                    {
-                        Debug.LogError($"Insantiated prefab \"{message.Value.PrefabName}\" attached to missing component", gameObject);
-                        transform.parent = null;
-                    }
-                }
-                else
-                {
-                    if (Network.Instance.MyClient!.ReplicatedComponents.TryGetValue(message.Value.ParentNetId, out var replicatedComponent))
-                        transform.parent = replicatedComponent.transform;
-                    else
-                    {
-                        Debug.LogError($"Insantiated prefab \"{message.Value.PrefabName}\" attached to missing component", gameObject);
-                        transform.parent = null;
-                    }
-                }
+                Debug.LogError($"Insantiated prefab \"{message.Value.PrefabName}\" attached to missing component", gameObject);
+                transform.parent = null;
             }
 
             transform.localPosition = message.Value.LocalPosition;
@@ -96,12 +80,8 @@ namespace DN
             if (netId == null)
                 return;
 
-            if (Network.Instance.IsServer &&
-                Network.Instance.Server!.ReplicatedComponents.TryGetValue(netId.Value, out var replicatedComponent1))
-                Destroy(replicatedComponent1.gameObject);
-            else if (Network.Instance.IsClient &&
-                Network.Instance.MyClient!.ReplicatedComponents.TryGetValue(netId.Value, out var replicatedComponent2))
-                Destroy(replicatedComponent2.gameObject);
+            if (Network.Instance.ReplicatedComponents.TryGetValue(netId.Value, out var replicatedComponent))
+                Destroy(replicatedComponent.gameObject);
         }
 
         [Rpc]

@@ -71,7 +71,7 @@ namespace DN
         [Rpc]
         void SendVoiceRpc(string json)
         {
-            if (!enabled || IsOwned || !Network.Instance.IsClient || Muted || Network.Instance.MuteVoiceChat)
+            if (!enabled || (IsOwned && Network.Instance.Lobby!.Value.MemberCount > 1) || !Network.Instance.IsClient || Muted || Network.Instance.MuteVoiceChat)
                 return;
 
             byte[]? audio = Network.Deserialize<byte[]?>(json);

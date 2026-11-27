@@ -8,7 +8,6 @@ namespace DN
         public enum Habitat { Land, Air, Sea, }
 
         [SerializeField] string entityId;
-
         EntitySfx entitySfx;
 
         public string EntityId => entityId;

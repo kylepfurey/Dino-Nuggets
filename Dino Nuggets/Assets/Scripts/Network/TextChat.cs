@@ -7,7 +7,7 @@ namespace DN
 {
     public class TextChat : ReplicatedMonoBehaviour
     {
-        public UnityEvent<string, string> OnMessage = new();
+        public UnityEvent<string, string> OnReceiveMessage;
 
         public void SendChat(string text)
         {
@@ -19,7 +19,6 @@ namespace DN
             CallRpc(SendChatRpc, message);
         }
 
-        [Serializable] struct ChatMessage { public string Name; public string Text; }
         [Rpc]
         void SendChatRpc(string json)
         {
@@ -27,7 +26,8 @@ namespace DN
             if (message == null || !enabled)
                 return;
 
-            OnMessage.Invoke(message.Value.Name, message.Value.Text);
+            OnReceiveMessage.Invoke(message.Value.Name, message.Value.Text);
         }
+        [Serializable] struct ChatMessage { public string Name; public string Text; }
     }
 }

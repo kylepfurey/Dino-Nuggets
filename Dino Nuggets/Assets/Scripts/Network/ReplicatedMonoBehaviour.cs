@@ -25,11 +25,7 @@ namespace DN
             BindRpcs();
         public void Initialize(uint netId, ulong ownerId)
         {
-            if (Network.Instance.IsServer)
-                Network.Instance.Server!.ReplicatedComponents[netId] = this;
-
-            if (Network.Instance.IsClient)
-                Network.Instance.MyClient!.ReplicatedComponents[netId] = this;
+            Network.Instance.ReplicatedComponents[netId] = this;
 
             OwnerId = ownerId;
             NetId = netId;
@@ -40,13 +36,9 @@ namespace DN
                 return;
 
             if (Network.Instance.IsServer)
-            {
                 Network.Instance.Server!.Destroy(NetId);
-                Network.Instance.Server!.ReplicatedComponents.Remove(NetId);
-            }
 
-            if (Network.Instance.IsClient)
-                Network.Instance.MyClient!.ReplicatedComponents.Remove(NetId);
+            Network.Instance.ReplicatedComponents.Remove(NetId);
         }
 
         void BindRpcs()

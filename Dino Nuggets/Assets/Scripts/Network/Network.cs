@@ -28,6 +28,7 @@ namespace DN
         [SerializeField] int appId;
         [SerializeField] string mainMenuScene;
         [SerializeField] Dictionary<string, GameObject> prefabs;
+        public readonly Dictionary<uint, ReplicatedMonoBehaviour> ReplicatedComponents = new();
 
         public string MainMenuScene => mainMenuScene;
         public Lobby? Lobby { get; private set; }
@@ -197,34 +198,23 @@ namespace DN
                     Lobby = null;
                 }
 
+                var replicatedComponents = ReplicatedComponents.Values;
+
                 if (MyClient != null)
                 {
-                    var replicatedComponents = MyClient.ReplicatedComponents.Values;
-
                     MyClient.Close(); // Cleans up remote objects
                     MyClient = null;
-
-                    if (Server != null)
-                    {
-                        Server.Close();
-                        Server = null;
-                    }
-
-                    foreach (var replicatedComponent in replicatedComponents)
-                        if (replicatedComponent != null && replicatedComponent.NetId != 1) // RpcHandler handled
-                            Destroy(replicatedComponent.gameObject);
                 }
-                else if (Server != null)
-                {
-                    var replicatedComponents = Server.ReplicatedComponents.Values;
 
+                if (Server != null)
+                {
                     Server.Close();
                     Server = null;
-
-                    foreach (var replicatedComponent in replicatedComponents)
-                        if (replicatedComponent != null && replicatedComponent.NetId != 1) // RpcHandler handled
-                            Destroy(replicatedComponent.gameObject);
                 }
+
+                foreach (var replicatedComponent in replicatedComponents)
+                    if (replicatedComponent != null && replicatedComponent.NetId != 1) // RpcHandler handled
+                        Destroy(replicatedComponent.gameObject);
 
                 if (RpcHandler != null)
                 {
@@ -241,7 +231,6 @@ namespace DN
             }
         }
 
-        static JsonSerializerSettings serializerSettings = new() { ContractResolver = new PublicFieldSerializer() };
         public static string Serialize(object? obj)
         {
             if (obj == null)
@@ -270,6 +259,7 @@ namespace DN
                 return default(T);
             }
         }
+        static JsonSerializerSettings serializerSettings = new() { ContractResolver = new PublicFieldSerializer() };
         class PublicFieldSerializer : DefaultContractResolver
         {
             protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization ms)

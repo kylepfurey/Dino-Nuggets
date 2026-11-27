@@ -1371,6 +1371,7 @@ RectTransform:
   - {fileID: 7231930464086059659}
   - {fileID: 600012357754522656}
   - {fileID: 2793671555397331313}
+  - {fileID: 4739571887465767391}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1474,6 +1475,7 @@ MonoBehaviour:
   pushToTalkText: {fileID: 6988609876230668811}
   backButton: {fileID: 7727032971491509709, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   backSfx: {fileID: 8300000, guid: 47a6f0e0a1862ac4fa44f4133686fb9b, type: 3}
+  voiceChatUI: {fileID: 2919883244075427119}
 --- !u!82 &1414262594389736709
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4700,6 +4702,97 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DN.Button
   hoverSfx: {fileID: 8300000, guid: e5db83603deafee45a2e165835667b93, type: 3}
   clickSfx: {fileID: 8300000, guid: 31a87bccd918e0644a6c12dc871a7b0c, type: 3}
+--- !u!1 &8245504971206226457
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4739571887465767391}
+  - component: {fileID: 3385389649740990479}
+  - component: {fileID: 6382032326714890114}
+  - component: {fileID: 2919883244075427119}
+  m_Layer: 5
+  m_Name: PushToTalkIcon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &4739571887465767391
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8245504971206226457}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 3258124493634346252}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 150}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &3385389649740990479
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8245504971206226457}
+  m_CullTransparentMesh: 1
+--- !u!114 &6382032326714890114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8245504971206226457}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 7902852542685906597, guid: 3231484e1ab206e449f9bd0b1e1ee95f, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2919883244075427119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8245504971206226457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62e6e6201e8d2a84497cd56a9079355a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DN.VoiceChatUI
+  icon: {fileID: 6382032326714890114}
+  VoiceChat: {fileID: 0}
+  pushToTalk: {fileID: -2404838421139113455, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!1 &8410169451792038603
 GameObject:
   m_ObjectHideFlags: 0

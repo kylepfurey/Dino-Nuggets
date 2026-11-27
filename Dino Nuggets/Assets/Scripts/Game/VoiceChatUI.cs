@@ -8,19 +8,28 @@ namespace DN
     public class VoiceChatUI : MonoBehaviour
     {
         [SerializeField] Image icon;
-        public VoiceChat VoiceChat;
         [SerializeField] InputActionReference pushToTalk;
+        VoiceChat voiceChat;
 
         void Update()
         {
-            if (VoiceChat == null)
+            if (voiceChat == null)
             {
                 icon.enabled = false;
+                voiceChat = FindAnyObjectByType<VoiceChat>();
                 return;
             }
 
-            VoiceChat.SendAudio = GameManager.Instance.Settings.PushToTalk == pushToTalk.ToInputAction().IsPressed();
-            icon.enabled = VoiceChat.SendAudio && SteamUser.HasVoiceData;
+            if (GameManager.Instance.Settings.PushToTalk)
+            {
+                voiceChat.SendAudio = pushToTalk.ToInputAction().IsPressed();
+                icon.enabled = voiceChat.SendAudio;
+            }
+            else
+            {
+                voiceChat.SendAudio = !pushToTalk.ToInputAction().IsPressed();
+                icon.enabled = voiceChat.SendAudio && SteamUser.HasVoiceData;
+            }
         }
     }
 }

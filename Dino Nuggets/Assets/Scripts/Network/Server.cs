@@ -26,6 +26,13 @@ namespace DN
             }
             connection.Close();
         }
+        public override void OnConnected(Connection connection, ConnectionInfo info)
+        {
+            base.OnConnected(connection, info);
+
+            if (Network.Instance.Prefabs.ContainsKey("VoiceChat"))
+                Instantiate(info.Identity.SteamId.Value, "VoiceChat", 1);
+        }
         public void SendRpcToClients(uint netId, string name, string json, bool reliable)
         {
             if (netId == 0)
@@ -129,7 +136,7 @@ namespace DN
 
         public void LoadScene(string sceneName) =>
             Network.Instance.RpcHandler!.CallRpc(Network.Instance.RpcHandler.LoadSceneRpc, sceneName);
-        public uint Instantiate(ulong clientId, string prefabName, uint parentNetId, Vector3 localPosition, Quaternion localRotation)
+        public uint Instantiate(ulong clientId, string prefabName, uint parentNetId = 0, Vector3 localPosition = new(), Quaternion localRotation = new())
         {
             uint netId = nextNetId++;
             Network.Instance.RpcHandler!.CallRpc(

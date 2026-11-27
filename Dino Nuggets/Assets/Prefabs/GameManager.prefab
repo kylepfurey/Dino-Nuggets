@@ -53,10 +53,6 @@ MonoBehaviour:
   sfxTable: {fileID: 11400000, guid: 81b54f46574ea6d419811cdd7299f525, type: 2}
   materialTable: {fileID: 11400000, guid: 0a2fef08ad5a632498489dabce968698, type: 2}
   network: {fileID: 3555528375356740677}
-  Settings:
-    Sensitivity: 1
-    Volume: 1
-    PushToTalk: 1
 --- !u!114 &3555528375356740677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71,4 +67,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DN.Network
   appId: 5713110
   mainMenuScene: MainMenu
-  prefabs: []
+  prefabs:
+  - key: VoiceChat
+    value: {fileID: 6978888912938094550, guid: 0d846175e99eb7746ba6e002b96a0320, type: 3}

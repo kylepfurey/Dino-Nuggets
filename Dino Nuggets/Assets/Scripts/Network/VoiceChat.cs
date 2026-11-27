@@ -22,6 +22,7 @@ namespace DN
                     SteamUser.VoiceRecord = value;
             }
         }
+        public bool Muted { get; set; }
 
         protected override void Awake()
         {
@@ -46,14 +47,15 @@ namespace DN
                 return;
 
             byte[] audio = SteamUser.ReadVoiceDataBytes();
-            if (audio == null || audio.Length == 0)
+            if (audio == null || audio.Length == 0 || Muted)
                 return;
 
             CallRpc(SendVoiceRpc, audio, reliable: false);
         }
         protected override void OnDestroy()
         {
-            SendAudio = false;
+            if (GameManager.Instance != null && Network.Instance != null)
+                SendAudio = false;
             base.OnDestroy();
         }
 
@@ -69,7 +71,7 @@ namespace DN
         [Rpc]
         void SendVoiceRpc(string json)
         {
-            if (!enabled || IsOwned || !Network.Instance.IsClient)
+            if (!enabled || IsOwned || !Network.Instance.IsClient || Muted)
                 return;
 
             byte[]? audio = Network.Deserialize<byte[]?>(json);

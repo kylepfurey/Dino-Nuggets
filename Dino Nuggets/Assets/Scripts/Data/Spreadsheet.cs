@@ -26,7 +26,7 @@ namespace DN
             delegate bool Parser<T>(string s, out T result);
             readonly T GetAndParse<T>(string column, Parser<T> parser, T defaultValue)
             {
-                if (!columns.TryGetValue(column.Trim().ToLower(), out var str))
+                if (!columns.TryGetValue(column.Trim().ToLower(), out var str) || string.IsNullOrWhiteSpace(str))
                     return defaultValue;
                 if (!parser(str, out var result))
                     return defaultValue;
@@ -38,14 +38,14 @@ namespace DN
             public readonly float Float(string column, float defaultValue = 0.0f) => GetAndParse<float>(column, float.TryParse, defaultValue);
             public readonly string String(string column, string defaultValue = "")
             {
-                if (!columns.TryGetValue(column.Trim().ToLower(), out var result))
+                if (!columns.TryGetValue(column.Trim().ToLower(), out var result) || string.IsNullOrWhiteSpace(result))
                     return defaultValue;
                 result = result.Trim();
                 return result;
             }
             public readonly string[] Array(string column, string[] defaultValue = null)
             {
-                if (!columns.TryGetValue(column.Trim().ToLower(), out var str))
+                if (!columns.TryGetValue(column.Trim().ToLower(), out var str) || string.IsNullOrWhiteSpace(str))
                     return defaultValue ?? System.Array.Empty<string>();
                 string[] result = str.Split(',');
                 for (int i = 0; i < result.Length; ++i)

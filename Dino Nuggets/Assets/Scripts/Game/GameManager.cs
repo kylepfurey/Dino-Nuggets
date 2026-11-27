@@ -48,6 +48,7 @@ namespace DN
         [SerializeField] Table modelTable;
         [SerializeField] SfxTable sfxTable;
         [SerializeField] Table materialTable;
+        [SerializeField] Table imageTable;
         [SerializeField] Network network;
 
         public Spreadsheet EntitiesSpreadsheet => entitiesSpreadsheet;
@@ -57,6 +58,7 @@ namespace DN
         public Table ModelTable => modelTable;
         public SfxTable SfxTable => sfxTable;
         public Table MaterialTable => materialTable;
+        public Table ImageTable => imageTable;
         public Network Network => network;
         public SaveData Settings { get; } = new SaveData();
 
@@ -68,8 +70,8 @@ namespace DN
         }
         void OnDestroy() { if (Instance == this) Instance = null; }
 
-        public void SetSeed(int seed) => UnityEngine.Random.InitState(seed);
-        public void SetSeed(string seed)
+        public static void SetSeed(int seed) => UnityEngine.Random.InitState(seed);
+        public static void SetSeed(string seed)
         {
             // Random seed
             if (string.IsNullOrEmpty(seed))

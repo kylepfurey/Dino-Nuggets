@@ -52,6 +52,7 @@ MonoBehaviour:
   modelTable: {fileID: 11400000, guid: 2140b33dc435f744c9772eb3fc4ff609, type: 2}
   sfxTable: {fileID: 11400000, guid: 81b54f46574ea6d419811cdd7299f525, type: 2}
   materialTable: {fileID: 11400000, guid: 0a2fef08ad5a632498489dabce968698, type: 2}
+  imageTable: {fileID: 11400000, guid: 603d1c6663a14d4418852811e6e6961e, type: 2}
   network: {fileID: 3555528375356740677}
 --- !u!114 &3555528375356740677
 MonoBehaviour:
@@ -70,3 +71,7 @@ MonoBehaviour:
   prefabs:
   - key: VoiceChat
     value: {fileID: 6978888912938094550, guid: 0d846175e99eb7746ba6e002b96a0320, type: 3}
+  - key: Entity
+    value: {fileID: 4305569677217720896, guid: fd99a4a5bb42a2d4c94833c98fd096c6, type: 3}
+  - key: WorldGenerator
+    value: {fileID: 6244338993843728904, guid: 6cba0053a7738ef4b8820d7e5ec7f3e0, type: 3}

@@ -93,7 +93,7 @@ namespace DN
             KickMessage? message = Network.Deserialize<KickMessage?>(json);
             if (message != null && message.Value.ClientId == Network.Instance.MyClient!.ClientId)
             {
-                Debug.LogError($"Kicked: {message.Value.Reason}");
+                Debug.LogError($"Kicked: {message.Value.Reason}", gameObject);
                 Network.Instance.Disconnect(Network.Instance.MainMenuScene);
             }
         }

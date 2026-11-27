@@ -49,7 +49,7 @@ namespace DN
             }
             catch (Exception error)
             {
-                Debug.LogError($"Steam error: {error.Message}");
+                Debug.LogError($"Steam error: {error.Message}", gameObject);
             }
         }
         void LateUpdate()

@@ -133,7 +133,7 @@ namespace DN
 
         public void StartGame(string gameScene)
         {
-            GameManager.Instance.SetSeed(seedInput.text);
+            GameManager.SetSeed(seedInput.text);
 
             if (!Network.Instance.StartGame(gameScene))
                 return;

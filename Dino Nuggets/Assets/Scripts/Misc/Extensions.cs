@@ -14,6 +14,14 @@ namespace DN
         public static bool IsNearby(this Vector3 vector, Vector3 other, float maxDistance = 0.1f) => (other - vector).sqrMagnitude < maxDistance * maxDistance;
 
         public static T Random<T>(this T[] array) => array.Length > 0 ? array[UnityEngine.Random.Range(0, array.Length)] : default(T);
+        public static void Shuffle<T>(this List<T> list)
+        {
+            for (int i = list.Count - 1; i > 0; i--)
+            {
+                int j = UnityEngine.Random.Range(0, i + 1);
+                (list[i], list[j]) = (list[j], list[i]);
+            }
+        }
 
         public static void SpawnSound(this AudioClip clip)
         {

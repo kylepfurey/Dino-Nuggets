@@ -4,10 +4,12 @@ namespace DN
 {
     public class EntityEvents : MonoBehaviour
     {
-        [SerializeField] Entity entity;
+        Entity entity;
         [SerializeField] Animator animator;
 
-        void OnFootstep(Object foot) => PlayRandomSfx(entity.EntitySfx.FootstepSfx, (Transform)foot);
+        void Awake() => entity = transform.parent.GetComponent<Entity>();
+
+        void OnFootstep(Object foot) => PlayRandomSfx(entity.Sfx.FootstepSfx, (Transform)foot);
 
         void PlayRandomSfx(AudioClip[] clips, Transform pivot)
         {

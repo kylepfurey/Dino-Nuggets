@@ -1,12 +1,22 @@
+using System;
 using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace DN
 {
     public class GameManager : MonoBehaviour
     {
         public static GameManager Instance { get; private set; }
+
+        [Serializable]
+        public class SaveData
+        {
+            public float Sensitivity;
+            public float Volume;
+            public bool PushToTalk;
+        }
 
         [SerializeField] Spreadsheet entitiesSpreadsheet;
         [SerializeField] Spreadsheet itemsSpreadsheet;
@@ -16,6 +26,7 @@ namespace DN
         [SerializeField] SfxTable sfxTable;
         [SerializeField] Table materialTable;
         [SerializeField] Network network;
+        public SaveData Settings;
 
         public Spreadsheet EntitiesSpreadsheet => entitiesSpreadsheet;
         public Spreadsheet ItemsSpreadsheet => itemsSpreadsheet;
@@ -34,13 +45,13 @@ namespace DN
         }
         void OnDestroy() { if (Instance == this) Instance = null; }
 
-        public void SetSeed(int seed) => Random.InitState(seed);
+        public void SetSeed(int seed) => UnityEngine.Random.InitState(seed);
         public void SetSeed(string seed)
         {
             // Random seed
             if (string.IsNullOrEmpty(seed))
             {
-                Random.InitState(new System.Random().Next());
+                UnityEngine.Random.InitState(new System.Random().Next());
                 return;
             }
 
@@ -48,7 +59,7 @@ namespace DN
             seed = seed.Trim();
             if (int.TryParse(seed, out var result))
             {
-                Random.InitState(result);
+                UnityEngine.Random.InitState(result);
                 return;
             }
 
@@ -64,7 +75,7 @@ namespace DN
                     hash *= prime;
                 }
             }
-            Random.InitState((int)hash);
+            UnityEngine.Random.InitState((int)hash);
         }
     }
 }

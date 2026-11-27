@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5341760169915869608
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3490193712041780985}
+  - component: {fileID: 3791911264900401958}
+  - component: {fileID: 3555528375356740677}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3490193712041780985
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5341760169915869608}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3791911264900401958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5341760169915869608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b928eca4e801d3f4a88929061dc5198a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DN.GameManager
+  entitiesSpreadsheet: {fileID: 11400000, guid: 1779319b1e75d2e40b0e9e0988f01e60, type: 2}
+  itemsSpreadsheet: {fileID: 11400000, guid: 3ddff910f3b925c4cba7c5e8a8b5a0b1, type: 2}
+  craftingSpreadsheet: {fileID: 11400000, guid: 63dcc283362e52e4bb4acad8e1db52a4, type: 2}
+  biomesSpreadsheet: {fileID: 11400000, guid: 20619928b94a01e41b9e2819d2b3fd04, type: 2}
+  modelTable: {fileID: 11400000, guid: 2140b33dc435f744c9772eb3fc4ff609, type: 2}
+  sfxTable: {fileID: 11400000, guid: 81b54f46574ea6d419811cdd7299f525, type: 2}
+  materialTable: {fileID: 11400000, guid: 0a2fef08ad5a632498489dabce968698, type: 2}
+  network: {fileID: 3555528375356740677}
+  Settings:
+    Sensitivity: 1
+    Volume: 1
+    PushToTalk: 1
+--- !u!114 &3555528375356740677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5341760169915869608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4f248d569c301c4db08cbcffd639078, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DN.Network
+  appId: 5713110
+  mainMenuScene: MainMenu
+  prefabs: []

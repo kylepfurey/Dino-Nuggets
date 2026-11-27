@@ -21,6 +21,7 @@ namespace DN
                 return;
             GameObject gameObject = new(clip.name);
             AudioSource audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.gameObject.AddComponent<AudioSourceExtras>();
             audioSource.clip = clip;
             audioSource.spatialBlend = 0.0f;
             audioSource.volume = 1.0f;
@@ -36,6 +37,7 @@ namespace DN
             gameObject.transform.parent = parent;
             gameObject.transform.localPosition = Vector3.zero;
             AudioSource audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.gameObject.AddComponent<AudioSourceExtras>();
             audioSource.clip = clip;
             audioSource.spatialBlend = 1.0f;
             audioSource.volume = 1.0f;
@@ -51,6 +53,7 @@ namespace DN
             gameObject.transform.position = position;
             gameObject.transform.parent = parent;
             AudioSource audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.gameObject.AddComponent<AudioSourceExtras>();
             audioSource.clip = clip;
             audioSource.spatialBlend = 1.0f;
             audioSource.volume = 1.0f;

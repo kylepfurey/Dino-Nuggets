@@ -26,7 +26,7 @@ namespace DN
         }
 
         [SerializeField] int appId;
-        [SerializeField] string mainMenuScene = "Main Menu";
+        [SerializeField] string mainMenuScene;
         [SerializeField] Dictionary<string, GameObject> prefabs;
 
         public uint AppId => (uint)appId;
